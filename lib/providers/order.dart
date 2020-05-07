@@ -20,13 +20,17 @@ class OrderItem {
 
 class Order with ChangeNotifier {
   List<OrderItem> _orders = [];
+  final String authToken;
+  final String userId;
+
+  Order(this.authToken, this.userId, this._orders);
 
   List<OrderItem> get orders {
     return [..._orders];
   }
 
   Future<void> getOrders() async {
-    const url = 'https://myshop-77a95.firebaseio.com/orders.json';
+    final url = 'https://myshop-77a95.firebaseio.com/orders.json?auth=$authToken&orderBy="createdBy"&equalTo="$userId"';
     try {
       final response = await http.get(url);
       final decodedResponse =
@@ -52,13 +56,14 @@ class Order with ChangeNotifier {
   }
 
   Future<void> addOrder(List<CartItem> cartProducts, double amount) async {
-    const url = 'https://myshop-77a95.firebaseio.com/orders.json';
+    final url = 'https://myshop-77a95.firebaseio.com/orders.json?auth=$authToken';
 
     final orderDate = DateTime.now();
 
     try {
       final response = await http.post(url, body: json.encode({
         'amount': amount,
+        'createdBy': userId,
         'products': cartProducts.map((prod) => {
             'id': prod.id,
             'title': prod.title,
