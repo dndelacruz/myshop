@@ -22,7 +22,7 @@ class ProductDetails extends StatelessWidget {
               elevation: 3,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: Image.network(selectedProduct.imageUrl, fit: BoxFit.cover,),
+                child: Hero(tag: selectedProduct.id, child: Image.network(selectedProduct.imageUrl, fit: BoxFit.cover,)),
                 ),
             ),
           ),

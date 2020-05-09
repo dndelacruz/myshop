@@ -33,8 +33,11 @@ class _OrderItemState extends State<OrderItem> {
                 },
               )),
         ),
-        if (_expanded)
-          Container(
+        // if (_expanded)
+          AnimatedContainer(
+            duration: Duration(milliseconds: 300),
+            curve: Curves.easeIn,
+            constraints: BoxConstraints(minHeight: _expanded ? 30 : 0, maxHeight: _expanded ? 180 : 0),
             margin: EdgeInsets.symmetric(horizontal: 20),
             padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
             height: min(widget.orderItem.products.length * 20.0 + 10, 180),
